@@ -2,8 +2,27 @@ import os
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
+from ConfigParser import ConfigParser
+
+
 
 import facebook
+
+config = ConfigParser()
+config.read('config.ini')
+
+# configuration
+DATABASE = config.get('Global', 'Database')
+DEBUG = config.get('Global', 'Debug')
+SECRET_KEY = config.get('Global', 'DevKey')
+USERNAME = config.get('SiteAuthentication', "Username")
+PASSWORD = config.get('SiteAuthentication', 'password')
+DOMAIN_NAME = config.get('Global', 'DomainName')
+GEONAMES = config.get('GeoNamesUsername', 'Username')
+FULLNAME = config.get('PersonalInfo', 'FullName')
+FACEBOOK = config.get('GoogleMaps', 'key')
+
+
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
 
@@ -43,4 +62,4 @@ def show_entries():
     return "hi"
 
 if __name__ == "__main__":
-    app.run(debug=True) 
+    app.run(debug=True)
