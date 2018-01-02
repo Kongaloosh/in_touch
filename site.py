@@ -3,9 +3,6 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from ConfigParser import ConfigParser
-
-
-
 import facebook
 
 config = ConfigParser()
@@ -20,8 +17,9 @@ PASSWORD = config.get('SiteAuthentication', 'password')
 DOMAIN_NAME = config.get('Global', 'DomainName')
 GEONAMES = config.get('GeoNamesUsername', 'Username')
 FULLNAME = config.get('PersonalInfo', 'FullName')
-FACEBOOK = config.get('GoogleMaps', 'key')
+FACEBOOK = config.get('Facebook', 'key')
 
+graph = facebook.GraphAPI(access_token=FACEBOOK, version="2.1")
 
 app = Flask(__name__) # create the application instance :)
 app.config.from_object(__name__) # load config from this file , flaskr.py
@@ -59,7 +57,9 @@ def teardown_request(exception):
 
 @app.route('/')
 def show_entries():
-    return "hi"
+    # graph.get_object(id='1478722104', fields='conversations')
+    print FACEBOOK
+    return FACEBOOK
 
 if __name__ == "__main__":
     app.run(debug=True)
